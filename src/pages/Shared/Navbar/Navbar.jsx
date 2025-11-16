@@ -1,13 +1,15 @@
-import React from "react";
+
 import Logo from "../../../components/Logo/Logo";
 import { NavLink } from "react-router";
 
 const Navbar = () => {
+  
   const links = (
     <>
       <li><NavLink to="/services">Services</NavLink></li>
       <li><NavLink to="/contact">Contact</NavLink></li>
       <li><NavLink to="/coverage">Coverage</NavLink></li>
+       
     </>
   );
 
