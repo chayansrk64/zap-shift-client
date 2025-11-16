@@ -49,8 +49,8 @@ const OurServices = () => {
             {/* card container */}
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto py-10'>
                 {
-                    services.map(service =>  
-                        <div className='bg-white p-4 text-center rounded-2xl'>
+                    services.map((service, index) =>  
+                        <div key={index} className='bg-white p-4 text-center rounded-2xl'>
                             <img className='mx-auto bg-secondary p-4 rounded-full' src={serviceImg} alt="" />
                             <h4 className="text-2xl my-4">{service.title}</h4>
                             <p>{service.description}</p>
