@@ -1,7 +1,9 @@
-import React from 'react';
+
 import { Link } from 'react-router';
 
 const Login = () => {
+
+    
     return (
        <div>
             <div className='py-6'>
@@ -10,8 +12,10 @@ const Login = () => {
             </div>
            <form>
                 <fieldset className="fieldset">
+                    {/* email */}
                 <label className="label font-bold">Email</label>
                 <input type="email" className="input w-full" placeholder="Email" />
+                {/* password */}
                 <label className="label font-bold">Password</label>
                 <input type="password" className="input w-full" placeholder="Password" />
                   <div><a className="link link-hover">Forgot password?</a></div>
