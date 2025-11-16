@@ -29,7 +29,7 @@ const Reviews = ({ reviewsPromise }) => {
             grabCursor={true}
             centeredSlides={true}
             slidesPerView={3}
-            crossFade={true}
+            
             speed={800}
             coverflowEffect={{
               rotate: 30,
