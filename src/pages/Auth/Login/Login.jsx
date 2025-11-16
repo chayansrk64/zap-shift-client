@@ -1,8 +1,18 @@
 
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
 const Login = () => {
 
+    const {
+        register,
+        handleSubmit,
+        formState: {errors}
+    } = useForm()
+    
+    const handleLogin = data => {
+        console.log('after login', data);
+    }
     
     return (
        <div>
@@ -10,14 +20,16 @@ const Login = () => {
                 <h3 className="text-4xl font-bold">WelCome Back</h3>
                 <p className='font-semibold py-2'>Login with ZapShift</p>
             </div>
-           <form>
+           <form onSubmit={handleSubmit(handleLogin)}>
                 <fieldset className="fieldset">
                     {/* email */}
                 <label className="label font-bold">Email</label>
-                <input type="email" className="input w-full" placeholder="Email" />
+                <input type="email" {...register("email", {required: true})} className="input w-full" placeholder="Email" />
+                {errors.email?.type === 'required' && <p className='text-red-500'>Email is required!</p>}
                 {/* password */}
                 <label className="label font-bold">Password</label>
-                <input type="password" className="input w-full" placeholder="Password" />
+                <input type="password" {...register("password", {required: true})} className="input w-full" placeholder="Password" />
+                {errors.password?.type === "required" && <p className='text-red-500'>Password is required!</p>}
                   <div><a className="link link-hover">Forgot password?</a></div>
                 <button className="btn bg-primary  mt-4">Login</button>
             </fieldset>
