@@ -3,6 +3,9 @@ import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home/Home";
 import Coverage from "../pages/Coverage/Coverage";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import AuthLayout from "../layouts/AuthLayout";
+import Register from "../pages/Auth/Register/Register";
+import Login from "../pages/Auth/Login/Login";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +21,20 @@ const router = createBrowserRouter([
                 loader: () => fetch('serviceCenter.json').then(res =>res.json()),
                 Component: Coverage,
                 hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>
+            }
+        ]
+    },
+    {
+        path: "/",
+        Component: AuthLayout,
+        children: [
+            {
+                path: "/register",
+                Component: Register
+            },
+            {
+                path: "/login",
+                Component: Login
             }
         ]
     }
