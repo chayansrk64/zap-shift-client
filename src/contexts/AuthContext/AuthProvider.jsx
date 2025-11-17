@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase/firebase.config';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 
@@ -31,6 +31,10 @@ const AuthProvider = ({children}) => {
         setLoading(true)
         return signOut(auth)
     }
+
+    const updateUserProfile =(profile) => {
+        return updateProfile(auth.currentUser, profile)
+    }
    
     // observer
     useEffect(() => {
@@ -51,6 +55,7 @@ const AuthProvider = ({children}) => {
         createUser,
         signInUser,
         googleLogIn,
+        updateUserProfile,
         logOut,
     }
 
