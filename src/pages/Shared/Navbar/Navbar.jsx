@@ -10,7 +10,7 @@ const Navbar = () => {
   const links = (
     <>
       <li><NavLink to="/services">Services</NavLink></li>
-      <li><NavLink to="/contact">Contact</NavLink></li>
+      <li><NavLink to="/send-parcel">Send Parcel</NavLink></li>
       <li><NavLink to="/coverage">Coverage</NavLink></li>
       <li><NavLink to="/">{user?.displayName}</NavLink></li>
        
@@ -56,9 +56,9 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <li className="btn btn-ghost text-xl">
+          <button className=" text-xl">
             <Logo></Logo>
-          </li>
+          </button>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
