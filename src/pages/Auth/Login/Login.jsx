@@ -1,12 +1,15 @@
 
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Login = () => {
 
     const {signInUser, setLoading} = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
+    
     
     const {
         register,
@@ -20,6 +23,7 @@ const Login = () => {
         .then(result => {
             console.log(result.user);
             setLoading(false)
+            navigate( location?.state || "/" )
            
         })
         .catch(error => console.log(error))
@@ -47,7 +51,7 @@ const Login = () => {
                 <button className="btn bg-primary  mt-4">Login</button>
             </fieldset>
            </form>
-           <p className='py-3'>Don't have any account? <Link to="/register" className='text-primary underline font-semibold'>Register</Link> </p>
+           <p className='py-3'>Don't have any account? <Link to="/register" state={location.state}  className='text-primary underline font-semibold'>Register</Link> </p>
           <div className='text-center'>or</div>
          <div>
             {/* Google */}

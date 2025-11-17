@@ -6,6 +6,8 @@ import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import AuthLayout from "../layouts/AuthLayout";
 import Register from "../pages/Auth/Register/Register";
 import Login from "../pages/Auth/Login/Login";
+import PrivateRoute from "./PrivateRoute";
+import Rider from "../pages/Rider/Rider";
 
 const router = createBrowserRouter([
     {
@@ -15,6 +17,10 @@ const router = createBrowserRouter([
             {
                 index: true,
                 Component: Home
+            },
+            {
+                path: '/rider',
+                element: <PrivateRoute> <Rider></Rider> </PrivateRoute>
             },
             {
                 path: '/coverage',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import axios from 'axios';
@@ -8,8 +8,12 @@ import axios from 'axios';
 const Register = () => {
 
     const {setLoading, createUser, updateUserProfile } = useAuth();
-
     const {register, formState: {errors}, handleSubmit} = useForm()
+    const location = useLocation();
+    const navigate = useNavigate()
+    // console.log('location form register', location);
+
+
 
     const handleRegister = data => {
         console.log('after register', data.photo[0]);
@@ -36,12 +40,14 @@ const Register = () => {
                 updateUserProfile(userProfile)
                 .then(result => {
                     console.log(result);
+                    navigate( location?.state || "/" )
+                    setLoading(false)
                 })
                 .catch(error => console.log(error))
 
             })
 
-            setLoading(false)
+            // setLoading(false)
         })
         .catch(error => {
             console.log(error);
@@ -77,7 +83,7 @@ const Register = () => {
                 <button className="btn bg-primary  mt-4">Register</button>
             </fieldset>
            </form>
-           <p className='py-3'>Already Have an account? <Link to="/login" className='text-primary underline font-semibold'>Login</Link> </p>
+           <p className='py-3'>Already Have an account? <Link to="/login" state={location.state} className='text-primary underline font-semibold'>Login</Link> </p>
           <div className='text-center'>or</div>
          <div>
             {/* Google */}
