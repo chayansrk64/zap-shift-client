@@ -1,15 +1,18 @@
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
 
 const SendParcel = () => {
+     // react hook form
+    const {register, handleSubmit, control, formState: {errors}} = useForm()
     const serviceCenter = useLoaderData();
     const allRegion = serviceCenter.map(r => r.region)
     const regions = [...new Set(allRegion)]
 
-      // react hook form
-    const {register, handleSubmit, watch, formState: {errors}} = useForm()
+     
 
-    const senderRegion = watch('senderRegion')
+    const senderRegion = useWatch({control, name: 'senderRegion'})
+    const receiverRegion = useWatch({control, name: 'receiverRegion'})
     // console.log(regions);
 
     const districtsByRegion = region => {
@@ -21,7 +24,45 @@ const SendParcel = () => {
   
 
     const handleParcelSubmit = data => {
-        console.log(data);
+        const isDocument = data.percelType === 'document';
+        const isSameDistrict = data.senderDistrict === data.receiverDistrict;
+        const parcelWeight = parseFloat(data.parcelWeight)
+
+        let cost = 0;
+
+        if(isDocument){
+            cost = isSameDistrict ? 60 : 80;
+        }
+        else {
+            if(parcelWeight < 3){
+                cost = isSameDistrict ? 110 : 150;
+            }else {
+                const minCharge = isSameDistrict ? 110 : 150;
+                const extraWeight = parcelWeight - 3;
+                const extraCharge = isSameDistrict ? (extraWeight * 40) : (extraWeight * 40) + 40;
+                cost = minCharge + extraCharge;
+            }
+        }
+
+        Swal.fire({
+            title: "Agree with the charge?",
+            text: `You have to pay ${cost}!`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "I agree!"
+            }).then((result) => {
+            if (result.isConfirmed) {
+                // Swal.fire({
+                // title: "Successful!",
+                // text: "Order Successfull",
+                // icon: "success"
+                // });
+            }
+            });
+
+        console.log(cost);
     }
 
     return (
@@ -66,17 +107,17 @@ const SendParcel = () => {
                         {/* sender region */}
                         <fieldset className="fieldset">
                         <legend className="fieldset-legend">Sender Region</legend>
-                        <select {...register('senderRegion')} defaultValue="Pick a region" className="select">
+                        <select {...register('senderRegion')} defaultValue="Pick a region" className="select w-full">
                             <option disabled={true}>Pick a Region</option>
                             {
                                 regions.map((region, index) =>  <option value={region} key={index}>{region}</option>)
                             }
                         </select>
                         </fieldset>
-                        {/* sender district */}
+                         {/* sender district */}
                         <fieldset className="fieldset">
                         <legend className="fieldset-legend">Sender District</legend>
-                        <select {...register('senderDistrict')} defaultValue="Pick a district" className="select">
+                        <select {...register('senderDistrict')} defaultValue="Pick a District" className="select w-full">
                             <option disabled={true}>Pick a District</option>
                             {
                                 districtsByRegion(senderRegion).map((region, index) =>  <option value={region} key={index}>{region}</option>)
@@ -103,15 +144,32 @@ const SendParcel = () => {
                         {/* wire house */}
                         <label className="label">Receiver PickUp Wire House</label>
                         <input type="text" {...register('receiverWireHouse')} className="input w-full" placeholder="Receiver Delivery Wire House" />
+                         {/* receiver region */}
+                        <fieldset className="fieldset">
+                        <legend className="fieldset-legend">Receiver Region</legend>
+                        <select {...register('receiverRegion')} defaultValue="Pick a region" className="select w-full">
+                            <option disabled={true}>Pick a Region</option>
+                            {
+                                regions.map((region, index) =>  <option value={region} key={index}>{region}</option>)
+                            }
+                        </select>
+                        </fieldset>
+                         {/* receiver district */}
+                        <fieldset className="fieldset">
+                        <legend className="fieldset-legend">Receiver District</legend>
+                        <select {...register('receiverDistrict')} defaultValue="Pick a District" className="select w-full">
+                            <option disabled={true}>Pick a District</option>
+                            {
+                                districtsByRegion(receiverRegion).map((region, index) =>  <option value={region} key={index}>{region}</option>)
+                            }
+                        </select>
+                        </fieldset>
                         {/* Receiver address */}
                         <label className="label">Receiver Address</label>
                         <input type="text" {...register('receiverAddress')} className="input w-full" placeholder="Receiver Address" />
                         {/* Receiver contact number */}
                         <label className="label">Receiver Contact Number</label>
                         <input type="number" {...register('receiverContactNumber')} className="input w-full" placeholder="Receiver Contact Number" />
-                        {/* Receiver region */}
-                        <label className="label">Receiver Region</label>
-                        <input type="text" {...register('receiverRegion')} className="input w-full" placeholder="Receiver Region" />
                         {/* picup instruction */}
                         <label className="label">Picup Instructions</label>
                          <textarea {...register('receiverPicupInstructions')} className="textarea h-24 w-full" placeholder="Picup Instructions"></textarea>
