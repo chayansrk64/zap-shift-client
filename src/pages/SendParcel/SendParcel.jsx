@@ -1,8 +1,24 @@
 import { useForm } from "react-hook-form";
+import { useLoaderData } from "react-router";
 
 const SendParcel = () => {
+    const serviceCenter = useLoaderData();
+    const allRegion = serviceCenter.map(r => r.region)
+    const regions = [...new Set(allRegion)]
 
-    const {register, handleSubmit, formState: {errors}} = useForm()
+      // react hook form
+    const {register, handleSubmit, watch, formState: {errors}} = useForm()
+
+    const senderRegion = watch('senderRegion')
+    // console.log(regions);
+
+    const districtsByRegion = region => {
+        const regionDistricts = serviceCenter.filter(c => c.region === region)
+        const districts = regionDistricts.map(d => d.district)
+        return districts;
+    }
+     
+  
 
     const handleParcelSubmit = data => {
         console.log(data);
@@ -47,15 +63,33 @@ const SendParcel = () => {
                         {/* wire house */}
                         <label className="label">Sender PickUp Wire House</label>
                         <input type="text" {...register('senderWireHouse')} className="input w-full" placeholder="Sender Wire House" />
+                        {/* sender region */}
+                        <fieldset className="fieldset">
+                        <legend className="fieldset-legend">Sender Region</legend>
+                        <select {...register('senderRegion')} defaultValue="Pick a region" className="select">
+                            <option disabled={true}>Pick a Region</option>
+                            {
+                                regions.map((region, index) =>  <option value={region} key={index}>{region}</option>)
+                            }
+                        </select>
+                        </fieldset>
+                        {/* sender district */}
+                        <fieldset className="fieldset">
+                        <legend className="fieldset-legend">Sender District</legend>
+                        <select {...register('senderDistrict')} defaultValue="Pick a district" className="select">
+                            <option disabled={true}>Pick a District</option>
+                            {
+                                districtsByRegion(senderRegion).map((region, index) =>  <option value={region} key={index}>{region}</option>)
+                            }
+                        </select>
+                        </fieldset>
+                        
                         {/* sender address */}
                         <label className="label">Sender Address</label>
                         <input type="text" {...register('senderAddress')} className="input w-full" placeholder="Sender Address" />
                         {/* sender contact number */}
                         <label className="label">Sender Contact Number</label>
                         <input type="number" {...register('senderContactNumber')} className="input w-full" placeholder="Sender Contact Number" />
-                        {/* sender region */}
-                        <label className="label">Sender Region</label>
-                        <input type="text" {...register('senderRegion')} className="input w-full" placeholder="Sender Region" />
                         {/* picup instruction */}
                         <label className="label">Picup Instructions</label>
                          <textarea {...register('senderPicupInstructions')} className="textarea h-24 w-full" placeholder="Picup Instructions"></textarea>

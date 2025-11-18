@@ -25,7 +25,9 @@ const router = createBrowserRouter([
             },
             {
                 path: '/send-parcel',
-                element: <PrivateRoute> <SendParcel></SendParcel> </PrivateRoute>
+                loader: () => fetch('serviceCenter.json').then(res =>res.json()),
+                element: <PrivateRoute> <SendParcel></SendParcel> </PrivateRoute>,
+                hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>
             },
             {
                 path: '/coverage',
