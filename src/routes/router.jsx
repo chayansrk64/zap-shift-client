@@ -9,6 +9,8 @@ import Login from "../pages/Auth/Login/Login";
 import PrivateRoute from "./PrivateRoute";
 import Rider from "../pages/Rider/Rider";
 import SendParcel from "../pages/SendParcel/SendParcel";
+import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
+import DashboardLayout from "../layouts/DashboardLayout";
 
 const router = createBrowserRouter([
     {
@@ -20,17 +22,17 @@ const router = createBrowserRouter([
                 Component: Home
             },
             {
-                path: '/rider',
+                path: 'rider',
                 element: <PrivateRoute> <Rider></Rider> </PrivateRoute>
             },
             {
-                path: '/send-parcel',
+                path: 'send-parcel',
                 loader: () => fetch('serviceCenter.json').then(res =>res.json()),
                 element: <PrivateRoute> <SendParcel></SendParcel> </PrivateRoute>,
                 hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>
             },
             {
-                path: '/coverage',
+                path: 'coverage',
                 loader: () => fetch('serviceCenter.json').then(res =>res.json()),
                 Component: Coverage,
                 hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>
@@ -38,16 +40,26 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: "/",
+        path: "/auth",
         Component: AuthLayout,
         children: [
             {
-                path: "/register",
+                path: "register",
                 Component: Register
             },
             {
-                path: "/login",
+                path: "login",
                 Component: Login
+            }
+        ]
+    },
+    {
+        path: '/dashboard',
+        element: <PrivateRoute> <DashboardLayout></DashboardLayout> </PrivateRoute>,
+        children: [
+            {
+                path: 'my-parcels',
+                Component: MyParcels
             }
         ]
     }
