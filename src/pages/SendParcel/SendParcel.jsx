@@ -1,8 +1,12 @@
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
 
 const SendParcel = () => {
+    const axiosSecure = useAxiosSecure()
+    const {user} = useAuth()
      // react hook form
     const {register, handleSubmit, control, formState: {errors}} = useForm()
     const serviceCenter = useLoaderData();
@@ -59,6 +63,14 @@ const SendParcel = () => {
                 // text: "Order Successfull",
                 // icon: "success"
                 // });
+
+                // send parcel to the db;
+                axiosSecure.post('/parcels', data)
+                .then(res => {
+                    console.log("after sending parcel to db", res.data);
+                })
+
+
             }
             });
 
@@ -100,10 +112,10 @@ const SendParcel = () => {
                         {/* sender name */}
                         <h4 className="text-xl font-semibold">Sender Details</h4>
                         <label className="label">Sender Name</label>
-                        <input type="text" {...register('senderName')} className="input w-full" placeholder="Sender Name" />
-                        {/* wire house */}
-                        <label className="label">Sender PickUp Wire House</label>
-                        <input type="text" {...register('senderWireHouse')} className="input w-full" placeholder="Sender Wire House" />
+                        <input type="text" {...register('senderName')} defaultValue={user?.displayName} className="input w-full" placeholder="Sender Name" />
+                        {/* sender email */}
+                        <label className="label">Sender Email</label>
+                        <input type="email" {...register('senderEmail')} defaultValue={user?.email} className="input w-full" placeholder="Sender Email" />
                         {/* sender region */}
                         <fieldset className="fieldset">
                         <legend className="fieldset-legend">Sender Region</legend>
@@ -141,9 +153,9 @@ const SendParcel = () => {
                         <h4 className="text-xl font-semibold">Receiver Details</h4>
                         <label className="label">Receiver Name</label>
                         <input type="text" {...register('receiverName')} className="input w-full" placeholder="Receiver Name" />
-                        {/* wire house */}
-                        <label className="label">Receiver PickUp Wire House</label>
-                        <input type="text" {...register('receiverWireHouse')} className="input w-full" placeholder="Receiver Delivery Wire House" />
+                        {/* receiver email */}
+                        <label className="label">Receiver Email</label>
+                        <input type="email" {...register('receiverEmail')} className="input w-full" placeholder="Receiver Email" />
                          {/* receiver region */}
                         <fieldset className="fieldset">
                         <legend className="fieldset-legend">Receiver Region</legend>
