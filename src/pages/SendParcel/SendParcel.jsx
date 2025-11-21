@@ -47,6 +47,7 @@ const SendParcel = () => {
                 cost = minCharge + extraCharge;
             }
         }
+        data.cost = cost;
 
         Swal.fire({
             title: "Agree with the charge?",
@@ -68,6 +69,11 @@ const SendParcel = () => {
                 axiosSecure.post('/parcels', data)
                 .then(res => {
                     console.log("after sending parcel to db", res.data);
+                    Swal.fire({
+                    title: "Successful!",
+                    text: "Order Successfull",
+                    icon: "success"
+                    });
                 })
 
 
