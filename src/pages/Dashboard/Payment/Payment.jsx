@@ -17,7 +17,7 @@ const Payment = () => {
         }
     })
 
-
+ 
 
      const handlePayment = async () => {
         const paymentInfo = {

@@ -59,6 +59,23 @@ const MyParcels = () => {
         }
       });
   }
+
+
+  // payment
+
+  const handlePayment = async (parcel) => {
+      const paymentInfo = {
+         cost: parcel.cost,
+         parcelId: parcel._id,
+         senderEmail: parcel.senderEmail,
+         parcelName: parcel.parcelName
+      }
+
+      const res = await axiosSecure.post('/payment-checkout-session', paymentInfo)
+      // redirect to the url
+      window.location.assign(res.data.url)
+
+  }
   
 
 
@@ -87,11 +104,14 @@ const MyParcels = () => {
         <td>
           {
             parcel.paymentStatus === 'paid' ? 
-            <span className='bg-green-400'>Paid</span>
+            <span className='text-green-500'>Paid</span>
             : 
-            <Link to={`/dashboard/payment/${parcel._id}`}>
-              <button className="btn btn-primary btn-sm text-black">Pay</button>
-            </Link>
+            // <Link to={`/dashboard/payment/${parcel._id}`}>
+            //   <button className="btn btn-primary btn-sm text-black">Pay</button>
+            // </Link>
+            
+              <button onClick={() => handlePayment(parcel)} className="btn btn-primary btn-sm text-black">Pay</button>
+            
           }
         </td>
         <td>{parcel.deliveryStatus}</td>
