@@ -1,4 +1,5 @@
 import React from 'react';
+import { BsCreditCard2FrontFill } from 'react-icons/bs';
 import { CiDeliveryTruck } from 'react-icons/ci';
 import { Link, NavLink, Outlet } from 'react-router';
 
@@ -35,11 +36,17 @@ const DashboardLayout = () => {
           </Link>
         </li>
 
-        {/* List item */}
+        {/* our List item */}
         <li>
-            <NavLink to="/dashboard/my-parcels" className="is-drawer-close:tooltip is-drawer-close:tooltip-right"  data-tip="myParcels">
+            <NavLink to="/dashboard/my-parcels" className="is-drawer-close:tooltip is-drawer-close:tooltip-right"  data-tip="my Parcels">
             <span className="my-1.5 inline-block size-4 text-xl"> <CiDeliveryTruck /> </span>
             <span className="is-drawer-close:hidden">My Parcels</span>
+            </NavLink>
+        </li>
+        <li>
+            <NavLink to="/dashboard/payment-history" className="is-drawer-close:tooltip is-drawer-close:tooltip-right"  data-tip="Payment History">
+            <span className="my-1.5 inline-block size-4 text-xl"> <BsCreditCard2FrontFill /> </span>
+            <span className="is-drawer-close:hidden">Payment History</span>
             </NavLink>
         </li>
         <li>
