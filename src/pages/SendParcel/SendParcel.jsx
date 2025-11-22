@@ -1,5 +1,5 @@
 import { useForm, useWatch } from "react-hook-form";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
@@ -8,10 +8,11 @@ const SendParcel = () => {
     const axiosSecure = useAxiosSecure()
     const {user} = useAuth()
      // react hook form
-    const {register, handleSubmit, control, formState: {errors}} = useForm()
+    const {register, handleSubmit, control,  } = useForm()
     const serviceCenter = useLoaderData();
     const allRegion = serviceCenter.map(r => r.region)
     const regions = [...new Set(allRegion)]
+    const navigate = useNavigate();
 
      
 
@@ -56,7 +57,7 @@ const SendParcel = () => {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "I agree!"
+            confirmButtonText: "Confirm and continue to pay!"
             }).then((result) => {
             if (result.isConfirmed) {
                 // Swal.fire({
@@ -69,11 +70,17 @@ const SendParcel = () => {
                 axiosSecure.post('/parcels', data)
                 .then(res => {
                     console.log("after sending parcel to db", res.data);
-                    Swal.fire({
-                    title: "Successful!",
-                    text: "Order Successfull",
-                    icon: "success"
-                    });
+                    if(res.data.insertedId){
+                        navigate('/dashboard/my-parcels')
+                            Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Parcel has created, please pay!",
+                            showConfirmButton: false,
+                            timer: 2500
+                            });
+                    }
+                    
                 })
 
 
