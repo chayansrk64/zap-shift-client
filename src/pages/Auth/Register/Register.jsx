@@ -30,11 +30,11 @@ const Register = () => {
 
             axios.post(image_API_URL, formData)
             .then(res => {
-                console.log('after image upload', res.data.data.url);
+                const photoURL = res.data.data.url;
                 // update user profile 
                 const userProfile = {
                     displayName: data.name,
-                    photoURL: res.data.data.url
+                    photoURL: photoURL
                 }
 
                 updateUserProfile(userProfile)
