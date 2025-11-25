@@ -58,7 +58,7 @@ const Rider = () => {
                         <input type="text" {...register('riderName')} defaultValue={user?.displayName} className="input w-full" placeholder="Rider Name" />
                         {/* Rider email */}
                         <label className="label">Rider Email</label>
-                        <input type="email" {...register('riderEmail')} defaultValue={user?.email} className="input w-full" placeholder="Rider Email" />
+                        <input type="email" {...register('email')} defaultValue={user?.email} className="input w-full" placeholder="Rider Email" />
                         {/* Rider region */}
                         <fieldset className="fieldset">
                         <legend className="fieldset-legend">Region</legend>
