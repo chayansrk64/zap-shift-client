@@ -2,7 +2,7 @@ import React from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
-import { FaTrashCan, FaUserCheck, FaUserMinus } from 'react-icons/fa6';
+import { FaEye, FaTrashCan, FaUserCheck, FaUserMinus } from 'react-icons/fa6';
 import Swal from 'sweetalert2';
 
 const ApproveRiders = () => {
@@ -78,9 +78,10 @@ const ApproveRiders = () => {
         <td>
             <p className={`${rider.status === 'approved' ? "text-green-800" : "text-red-500"}`}>{rider.status}</p>
         </td>
-        <td>
+        <td className='space-x-1'>
+            <button  className='btn'><FaEye /></button>
             <button onClick={() => handleApproval(rider)} className='btn'><FaUserCheck /></button>
-            <button onClick={() => handleRejection(rider)} className='btn mx-2'><FaUserMinus /></button>
+            <button onClick={() => handleRejection(rider)} className='btn'><FaUserMinus /></button>
             <button className='btn'><FaTrashCan /></button>
         </td>
 
