@@ -5,14 +5,20 @@ import { FaUser, FaUsers } from 'react-icons/fa6';
 import { RiMotorbikeFill } from 'react-icons/ri';
 import { Link, NavLink, Outlet } from 'react-router';
 import useRole from '../hooks/useRole';
+import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 
 const DashboardLayout = () => {
 
-  const {isLoading, role} = useRole()
+  const {roleLoading, role} = useRole()
+   
+
+  if(roleLoading){
+    return <LoadingSpinner></LoadingSpinner>
+  }
 
     return (
- 
-              <div className="drawer lg:drawer-open max-w-[1440px] mx-auto">
+
+  <div className="drawer lg:drawer-open max-w-[1440px] mx-auto">
   <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
   <div className="drawer-content">
     {/* Navbar */}
@@ -55,7 +61,7 @@ const DashboardLayout = () => {
             <span className="is-drawer-close:hidden">Payment History</span>
             </NavLink>
         </li>
-        
+
         {/* admin routes */}
         {
           role === 'admin' && <>
