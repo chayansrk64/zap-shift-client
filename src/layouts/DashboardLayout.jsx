@@ -4,8 +4,12 @@ import { CiDeliveryTruck } from 'react-icons/ci';
 import { FaUser, FaUsers } from 'react-icons/fa6';
 import { RiMotorbikeFill } from 'react-icons/ri';
 import { Link, NavLink, Outlet } from 'react-router';
+import useRole from '../hooks/useRole';
 
 const DashboardLayout = () => {
+
+  const {isLoading, role} = useRole()
+
     return (
  
               <div className="drawer lg:drawer-open max-w-[1440px] mx-auto">
@@ -51,18 +55,25 @@ const DashboardLayout = () => {
             <span className="is-drawer-close:hidden">Payment History</span>
             </NavLink>
         </li>
-        <li>
-            <NavLink to="/dashboard/approve-riders" className="is-drawer-close:tooltip is-drawer-close:tooltip-right"  data-tip="Approve Riders">
-            <span className="my-1.5 inline-block size-4 text-xl"> <RiMotorbikeFill /> </span>
-            <span className="is-drawer-close:hidden">Approve Riders</span>
-            </NavLink>
-        </li>
-        <li>
-            <NavLink to="/dashboard/manage-users" className="is-drawer-close:tooltip is-drawer-close:tooltip-right"  data-tip="Manage Users">
-            <span className="my-1.5 inline-block size-4 text-xl"> <FaUsers /> </span>
-            <span className="is-drawer-close:hidden">Manage Users</span>
-            </NavLink>
-        </li>
+        
+        {/* admin routes */}
+        {
+          role === 'admin' && <>
+                <li>
+                  <NavLink to="/dashboard/approve-riders" className="is-drawer-close:tooltip is-drawer-close:tooltip-right"  data-tip="Approve Riders">
+                  <span className="my-1.5 inline-block size-4 text-xl"> <RiMotorbikeFill /> </span>
+                  <span className="is-drawer-close:hidden">Approve Riders</span>
+                  </NavLink>
+              </li>
+              <li>
+                  <NavLink to="/dashboard/manage-users" className="is-drawer-close:tooltip is-drawer-close:tooltip-right"  data-tip="Manage Users">
+                  <span className="my-1.5 inline-block size-4 text-xl"> <FaUsers /> </span>
+                  <span className="is-drawer-close:hidden">Manage Users</span>
+                  </NavLink>
+              </li>
+          </>
+        }
+
         <li>
           <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
             {/* Settings icon */}
