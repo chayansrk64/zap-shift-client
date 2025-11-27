@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import { FaUserShield } from 'react-icons/fa';
@@ -7,13 +7,13 @@ import { FiShieldOff } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 
 const ManageUsers = () => {
-
     const axiosSecure = useAxiosSecure()
+    const [searchText, setSearchText] = useState('')
 
-    const {isLoading, data: users = [], refetch} = useQuery({
-        queryKey: ['users'],
+    const { data: users = [], refetch} = useQuery({
+        queryKey: ['users', searchText],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/users`)
+            const res = await axiosSecure.get(`/users?searchText=${searchText}`)
             return res.data
         }
     })
@@ -56,16 +56,36 @@ const ManageUsers = () => {
     }
 
 
-    if(isLoading){
-        return <LoadingSpinner></LoadingSpinner>
-    }
 
     return (
         <div>
             <h3 className='text-3xl font-semibold'>Manage Users: {users.length}</h3>
+          <p>SearchText: {searchText}</p>
+            {/* search */}
+     <label className="input">
+  <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <g
+      strokeLinejoin="round"
+      strokeLinecap="round"
+      strokeWidth="2.5"
+      fill="none"
+      stroke="currentColor"
+    >
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </g>
+  </svg>
 
-            <div>
-                <div className="overflow-x-auto">
+  <input 
+  onChange={(e) => setSearchText(e.target.value)}
+  type="search" 
+  className="grow" 
+  placeholder="Search" />
+  
+</label>
+
+  <div>
+  <div className="overflow-x-auto">
   <table className="table">
     {/* head */}
     <thead>
