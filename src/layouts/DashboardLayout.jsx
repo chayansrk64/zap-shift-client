@@ -6,6 +6,7 @@ import { RiEBike2Fill, RiEBikeFill, RiMotorbikeFill } from 'react-icons/ri';
 import { Link, NavLink, Outlet } from 'react-router';
 import useRole from '../hooks/useRole';
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
+import { GiDeliveryDrone } from 'react-icons/gi';
 
 const DashboardLayout = () => {
 
@@ -61,6 +62,20 @@ const DashboardLayout = () => {
             <span className="is-drawer-close:hidden">Payment History</span>
             </NavLink>
         </li>
+
+        {/* rider routes */}
+        {
+          role === 'rider' && <>
+           <li>
+                  <NavLink to="/dashboard/assigned-deliveries" className="is-drawer-close:tooltip is-drawer-close:tooltip-right"  data-tip="Assigned Deliveries">
+                  <span className="my-1.5 inline-block size-4 text-xl"> <GiDeliveryDrone /> </span>
+                  <span className="is-drawer-close:hidden">Assigned Deliveries</span>
+                  </NavLink>
+              </li>
+          
+          </>
+        }
+
 
         {/* admin routes */}
         {
