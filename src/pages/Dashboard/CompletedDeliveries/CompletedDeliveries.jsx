@@ -49,7 +49,7 @@ const CompletedDeliveries = () => {
         <td>{parcel.cost}</td>
         <td>{calculatePayout(parcel)}</td>
         <td>
-           actions
+           <button className='btn btn-primary text-black btn-sm'>Cash Out</button>
         </td>
       </tr>)
       }
