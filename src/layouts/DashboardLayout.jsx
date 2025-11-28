@@ -7,6 +7,7 @@ import { Link, NavLink, Outlet } from 'react-router';
 import useRole from '../hooks/useRole';
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 import { GiDeliveryDrone } from 'react-icons/gi';
+import { IoMdDoneAll } from 'react-icons/io';
 
 const DashboardLayout = () => {
 
@@ -66,10 +67,16 @@ const DashboardLayout = () => {
         {/* rider routes */}
         {
           role === 'rider' && <>
-           <li>
+               <li>
                   <NavLink to="/dashboard/assigned-deliveries" className="is-drawer-close:tooltip is-drawer-close:tooltip-right"  data-tip="Assigned Deliveries">
                   <span className="my-1.5 inline-block size-4 text-xl"> <GiDeliveryDrone /> </span>
                   <span className="is-drawer-close:hidden">Assigned Deliveries</span>
+                  </NavLink>
+              </li>
+               <li>
+                  <NavLink to="/dashboard/completed-deliveries" className="is-drawer-close:tooltip is-drawer-close:tooltip-right"  data-tip="Completed Deliveries">
+                  <span className="my-1.5 inline-block size-4 text-xl"> <IoMdDoneAll /> </span>
+                  <span className="is-drawer-close:hidden">Completed Deliveries</span>
                   </NavLink>
               </li>
           
