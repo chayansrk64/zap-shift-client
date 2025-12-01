@@ -44,7 +44,7 @@ const AdminDashboardHome = () => {
               ></path>
             </svg>
           </div>
-          <div className="stat-title">{stat._id}</div>
+          <div className="stat-title text-xl font-semibold">{stat._id}</div>
           <div className="stat-value">{stat.count}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
